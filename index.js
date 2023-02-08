@@ -12,6 +12,7 @@ let messageEl = document.getElementById("message-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 let playerEl = document.getElementById("player-el")
+let showButtons = document.querySelector(".ActiveButtons")
 
 playerEl.textContent = player.name + ": $" + player.chips
 
@@ -33,6 +34,7 @@ function startGame() {
     cards = [firstCard, secondCard]
     sum = firstCard + secondCard
     renderGame()
+    renderPlayerMove()
 }
 
 function renderGame() {
@@ -52,6 +54,14 @@ function renderGame() {
         isAlive = false
     }
     messageEl.textContent = message
+}
+
+function renderPlayerMove() {
+    showButtons.innerHTML =
+       `<div class="playerMove">
+          <button onclick="hold()">HOLD</button>
+          <button onclick="newCard()">NEW CARD</button>
+        </div>`
 }
 
 
