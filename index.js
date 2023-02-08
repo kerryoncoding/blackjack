@@ -1,10 +1,11 @@
 let player = {
-    name: "Player",
+    name: "Player Chips",
     chips: 200
 }
 
 let cards = []
 let sum = 0
+let pot = 0
 let message = ""
 let messageEl = document.getElementById("message-el")
 //let playerCards = document.querrySelector(".playerCards-el")
@@ -47,6 +48,7 @@ function renderGame() {
         renderPlayerMove();
     } else if (sum === 21) {
         message = "You've got Blackjack!"
+        player.chips += pot;
         showButtons.innerHTML =
         `<div class="bets">
           <button onclick="playAgain()">PLAY AGAIN</button>
@@ -63,9 +65,8 @@ function renderGame() {
 
 function renderBets() {
     message = "Place your bet"
-    messageEl.textContent = message
-
-showButtons.innerHTML =
+    messageEl.innerHTML = message
+    showButtons.innerHTML =
         `<div class="bets">
           <button onclick="betFive()">$5</button>
           <button onclick="betTen()">$10</button>
@@ -74,8 +75,8 @@ showButtons.innerHTML =
 }
 
 function betFive() {
-    alert("you bet 5");
-    player.chips -= 5; 
+    player.chips -= 5;
+    pot = 10;
     renderGame();
 }
 
@@ -92,12 +93,30 @@ function stay() {
     //compare your hand with dealer's hand
     alert("show all cards")
     //if house wins
-    //if you win
+    if (sum > 1) {
+        message = "You win!"
+        player.chips += pot;
+        playerEl.textContent = player.name + ": $" + player.chips
+        showButtons.innerHTML =
+            `<div class="bets">
+            <button onclick="playAgain()">PLAY AGAIN</button>
+            </div>` 
+    } else {
+         message = "The house wins"
+        player.chips -= pot;
+        playerEl.textContent = player.name + ": $" + player.chips
+        showButtons.innerHTML =
+            `<div class="bets">
+            <button onclick="playAgain()">PLAY AGAIN</button>
+            </div>`
+    }
+    messageEl.innerHTML = message  
 }
 
 function playAgain() {
     //restart game
     alert("play again")
+    sum = 0;
 }
 
 
