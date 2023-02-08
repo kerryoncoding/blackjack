@@ -54,7 +54,7 @@ function renderGame() {
           <button onclick="playAgain()">PLAY AGAIN</button>
         </div>`
     } else {
-        message = "You're out of the game!"
+        message = "House Wins!"
         showButtons.innerHTML =
         `<div class="bets">
           <button onclick="renderBets()">PLAY AGAIN</button>
@@ -115,7 +115,9 @@ function stay() {
 
 function playAgain() {
     //restart game
-    alert("play again")
+    cardsEl.textContent = ""
+    sumEl.textContent = ""
+    cards = []
     sum = 0;
 }
 
