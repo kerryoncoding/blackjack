@@ -33,8 +33,9 @@ function startGame() {
     let secondCard = getRandomCard()
     cards = [firstCard, secondCard]
     sum = firstCard + secondCard
-    renderGame()
-    renderPlayerMove()
+ //   renderGame()
+    renderBets()
+//    renderPlayerMove()
 }
 
 function renderGame() {
@@ -54,6 +55,18 @@ function renderGame() {
         isAlive = false
     }
     messageEl.textContent = message
+}
+
+function renderBets() {
+    message = "Place your bet"
+    messageEl.textContent = message
+
+showButtons.innerHTML =
+        `<div class="bets">
+          <button onclick="betFive()">$5</button>
+          <button onclick="betTen()">$10</button>
+          <button onclick="betFifteen()">$15</button>
+        </div>`
 }
 
 function renderPlayerMove() {
