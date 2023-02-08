@@ -39,12 +39,12 @@ function startGame() {
 }
 
 function renderGame() {
-    cardsEl.textContent = "Cards: "
+    cardsEl.textContent = "Player's Cards: "
     for (let i = 0; i < cards.length; i++) {
         cardsEl.textContent += cards[i] + " "
     }
     
-    sumEl.textContent = "Sum: " + sum
+    sumEl.textContent = "Total this Hand: " + sum
     if (sum <= 20) {
         message = "Do you want to draw a new card?"
     } else if (sum === 21) {
@@ -55,6 +55,7 @@ function renderGame() {
         isAlive = false
     }
     messageEl.textContent = message
+    renderPlayerMove();
 }
 
 function renderBets() {
@@ -69,13 +70,26 @@ showButtons.innerHTML =
         </div>`
 }
 
+function betFive() {
+    alert("you bet 5");
+    renderGame();
+}
+
 function renderPlayerMove() {
     showButtons.innerHTML =
        `<div class="playerMove">
-          <button onclick="hold()">HOLD</button>
+          <button onclick="stay()">STAY</button>
           <button onclick="newCard()">NEW CARD</button>
         </div>`
 }
+
+function stay() {
+    //compare your hand with dealer's hand
+    alert("show all cards")
+    //if house wins
+    //if you win
+}
+
 
 
 function newCard() {
