@@ -51,3 +51,12 @@ button {
 .codelink {
     color: goldenrod;
 }
+
+.codelink a {
+    color: white;
+    text-decoration: none;
+}
+
+.codelink a:hover {
+    text-decoration: underline;
+}

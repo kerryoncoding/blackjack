@@ -5,10 +5,9 @@ let player = {
 
 let cards = []
 let sum = 0
-let hasBlackJack = false
-let isAlive = false
 let message = ""
 let messageEl = document.getElementById("message-el")
+//let playerCards = document.querrySelector(".playerCards-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 let playerEl = document.getElementById("player-el")
@@ -28,34 +27,38 @@ function getRandomCard() {
 }
 
 function startGame() {
-    isAlive = true
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
     cards = [firstCard, secondCard]
     sum = firstCard + secondCard
- //   renderGame()
     renderBets()
-//    renderPlayerMove()
 }
 
 function renderGame() {
+    playerEl.textContent = player.name + ": $" + player.chips
     cardsEl.textContent = "Player's Cards: "
     for (let i = 0; i < cards.length; i++) {
-        cardsEl.textContent += cards[i] + " "
+        cardsEl.textContent = cardsEl.textContent += cards[i] + " "
     }
-    
     sumEl.textContent = "Total this Hand: " + sum
     if (sum <= 20) {
+        console.log(sum);
         message = "Do you want to draw a new card?"
+        renderPlayerMove();
     } else if (sum === 21) {
         message = "You've got Blackjack!"
-        hasBlackJack = true
+        showButtons.innerHTML =
+        `<div class="bets">
+          <button onclick="playAgain()">PLAY AGAIN</button>
+        </div>`
     } else {
         message = "You're out of the game!"
-        isAlive = false
+        showButtons.innerHTML =
+        `<div class="bets">
+          <button onclick="renderBets()">PLAY AGAIN</button>
+        </div>`
     }
-    messageEl.textContent = message
-    renderPlayerMove();
+    messageEl.innerHTML = message   
 }
 
 function renderBets() {
@@ -72,8 +75,10 @@ showButtons.innerHTML =
 
 function betFive() {
     alert("you bet 5");
+    player.chips -= 5; 
     renderGame();
 }
+
 
 function renderPlayerMove() {
     showButtons.innerHTML =
@@ -90,13 +95,15 @@ function stay() {
     //if you win
 }
 
+function playAgain() {
+    //restart game
+    alert("play again")
+}
 
 
 function newCard() {
-    if (isAlive === true && hasBlackJack === false) {
-        let card = getRandomCard()
-        sum += card
-        cards.push(card)
-        renderGame()        
-    }
+        let hitCard = getRandomCard();
+        sum += hitCard;
+        cards.push(hitCard);
+        renderGame();       
 }
