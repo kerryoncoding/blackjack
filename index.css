@@ -1,6 +1,17 @@
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', Arial, sans-serif;
+    text-align: center;
+    background-color: black;
+   
+}
+
+.table {
+    display: block;
+    margin: 50 auto;
+    border: solid 2px goldenrod;
+    border-radius: 10px;
     background-image: url("images/table.png");
+    width: 600px;
     background-size: cover;
     font-weight: bold;
     color: white;
@@ -9,6 +20,7 @@ body {
 
 h1 {
     color: goldenrod;
+    font-size: 40px;
 }
 
 #message-el {
