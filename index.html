@@ -9,12 +9,26 @@
   <body>
     <div class="table">
       <h1>Blackjack</h1>
-      <p id="message-el">$5 minimum - Want to play?</p>
-      <p id="cards-el">Cards:</p>
-      <p id="sum-el">Sum:</p>
+      <div class="info">
+        <p id="message-el">Want to play?</p>
+      </div>
+      <div class="playerCards">
+        <p id="cards-el">Cards:</p>
+        <p id="sum-el">Sum:</p>
+      </div>
       <div class="activeButtons">
-        <button onclick="startGame()">START GAME</button>
-        <button onclick="newCard()">NEW CARD</button>
+        <div class="begin">
+          <button onclick="startGame()">Start Game</button>
+        </div>
+        <div class="bets">
+          <button onclick="betFive()">$5</button>
+          <button onclick="betTen()">$10</button>
+          <button onclick="betFifteen()">$15</button>
+        </div>
+        <div class="playerMove">
+          <button onclick="hold()">$5</button>
+          <button onclick="newCard()">NEW CARD</button>
+        </div>
       </div>
       <p id="player-el"></p>
       <script src="index.js"></script>
