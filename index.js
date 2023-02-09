@@ -1,5 +1,5 @@
 let player = {
-    name: "Player Chips",
+    name: "Player Name TBD",
     chips: 200
 }
 
@@ -20,7 +20,6 @@ let playerCardsEl = document.querySelector(".playerCards-el")
 let infoMessageEl = document.querySelector(".infoMessage-el")
 let statInfoEl = document.querySelector(".statInfo-el")
 
-let cardsEl = document.getElementById("cards-el")
 let showButtons = document.querySelector(".ActiveButtons")
 
 // playerEl.textContent = player.name + ": $" + player.chips
@@ -30,14 +29,14 @@ let showButtons = document.querySelector(".ActiveButtons")
 function renderDealerCards() {
     dealerCardsEl.innerHTML =
     `<div class="playerBox">
-          <p id="dealer-el">Dealer's Hand: X ${dealerCards[1]}</p>
+          <p>Dealer's Hand: X ${dealerCards[1]}</p>
     </div>`
 }
 
 function renderAllDealerCards() {
     dealerCardsEl.innerHTML =
     `<div class="playerBox">
-          <p id="dealer-el">Dealer's Hand: ${dealerCards[0]} ${dealerCards[1]}</p>
+          <p>Dealer's Hand: ${dealerCards[0]} ${dealerCards[1]}</p>
           <p>Sum of Hand: ${dealerSum}</p>
     </div>`
 }
@@ -49,7 +48,7 @@ function renderPlayerCards() {
     }
     playerCardsEl.innerHTML = 
     `<div class="playerBox">
-          <p>Your's Hand: ${hand}</p>
+          <p>Your Hand: ${hand}</p>
           <p>Sum of Hand: ${playerSum}</p>
     </div>`
 }
@@ -70,7 +69,7 @@ function renderButtons() {
 
 function renderStatInfo() {
     statInfoEl.innerHTML = 
-    `<p>Your Chips: $ ${player.chips}</p><p>Current Bet: $ ${currentBet}</p>`
+    `<p>Your Chips: $ ${player.chips}</p><p>Pot Value: $ ${pot}</p>`
 }
 
 renderInfoMessage()
@@ -177,6 +176,7 @@ function stay() {
             </div>` 
     } else if(playerSum === dealerSum) {
         message = "It's a Tie!"
+        player.chips += currentBet;
         renderAllDealerCards()
         showButtons.innerHTML =
             `<div class="bets">
@@ -184,7 +184,6 @@ function stay() {
             </div>` 
     }else {
         message = "House wins!"
-        player.chips -= pot;
         renderAllDealerCards()
         showButtons.innerHTML =
             `<div class="bets">
@@ -195,6 +194,7 @@ function stay() {
 }
 
 function playAgain() {
+    pot = 0
     currentBet = 0
     playerCards = []
     dealerCards = []
