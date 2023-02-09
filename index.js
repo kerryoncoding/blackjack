@@ -33,6 +33,14 @@ function renderDealerCards() {
     </div>`
 }
 
+function renderAllDealerCards() {
+    dealerCardsEl.innerHTML =
+    `<div class="playerBox">
+          <p id="dealer-el">Dealer's Hand: ${dealerCards[0]} ${dealerCards[1]}</p>
+          <p>Sum of Hand: ${dealerSum}</p>
+    </div>`
+}
+
 function renderPlayerCards() {
     let hand = ""
     for (let i = 0; i < playerCards.length; i++) {
@@ -43,6 +51,11 @@ function renderPlayerCards() {
           <p>Your's Hand: ${hand}</p>
           <p>Sum of Hand: ${playerSum}</p>
     </div>`
+}
+
+function clearTable() {
+    dealerCardsEl.innerHTML = `<div></div>`
+    playerCardsEl.innerHTML = `<div></div>`
 }
 
 function renderInfoMessage() {
@@ -141,10 +154,10 @@ function stay() {
     //compare your hand with dealer's hand
     alert("show all cards")
     //if house wins
-    if (playerSum > 1) {
+    if (playerSum > dealerSum) {
         message = "You win!"
         player.chips += pot;
-        playerEl.textContent = player.name + ": $" + player.chips
+        renderAllDealerCards()
         showButtons.innerHTML =
             `<div class="bets">
             <button onclick="playAgain()">PLAY AGAIN</button>
@@ -152,7 +165,7 @@ function stay() {
     } else {
         message = "The house wins"
         player.chips -= pot;
-        playerEl.textContent = player.name + ": $" + player.chips
+        renderAllDealerCards()
         showButtons.innerHTML =
             `<div class="bets">
             <button onclick="playAgain()">PLAY AGAIN</button>
@@ -166,6 +179,7 @@ function playAgain() {
     currentBet = 0
     playerCards = []
     dealerCards = []
+    clearTable()
     startGame()
 }
 
