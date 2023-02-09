@@ -3,7 +3,9 @@ let player = {
     chips: 200
 }
 
-let cards = []
+
+let playerCards = []
+let dealerCards = []
 let playerSum = 0
 let currentBet = 0
 let pot = 0
@@ -26,15 +28,19 @@ playerEl.textContent = player.name + ": $" + player.chips
 function renderDealerCards() {
     dealerCardsEl.innerHTML =
     `<div class="playerBox">
-          <p id="dealer-el">Dealer's cards here</p>
+          <p id="dealer-el">Dealer's Hand: X ${dealerCards[1]}</p>
     </div>`
 }
 
 function renderPlayerCards() {
+    let hand = ""
+    for (let i = 0; i < playerCards.length; i++) {
+        hand += playerCards[i] + " "
+    }
     playerCardsEl.innerHTML = 
     `<div class="playerBox">
-          <p id="player-el"> players cards here</p>
-          <p id="sum-el">player sum here</p>
+          <p id="player-el">Your's Hand: ${hand}</p>
+          <p id="sum-el">Sum of Hand: ${playerSum}</p>
     </div>`
 }
 
@@ -49,7 +55,7 @@ function renderButtons() {
 
 function renderStatInfo() {
     statInfoEl.innerHTML = 
-    `<p>Player Chips: ${player.chips}</p><p>Current Bet: $ ${currentBet}</p>`
+    `<p>Your Chips: $ ${player.chips}</p><p>Current Bet: $ ${currentBet}</p>`
 }
 
 renderInfoMessage()
@@ -71,8 +77,12 @@ function getRandomCard() {
 function startGame() {
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
-    cards = [firstCard, secondCard]
+    playerCards = [firstCard, secondCard]
     playerSum = firstCard + secondCard
+    let dealerFirstCard = getRandomCard()
+    let dealerSecondCard = getRandomCard()
+    dealerCards = [dealerFirstCard, dealerSecondCard]
+    dealerSum = dealerFirstCard + dealerSecondCard
     renderBets()
     renderStatInfo()
 }
@@ -82,10 +92,10 @@ function renderGame() {
     renderPlayerCards()
    // playerEl.textContent = player.name + ": $" + player.chips
   //  cardsEl.textContent = "Player's Cards: "
-    for (let i = 0; i < cards.length; i++) {
-        cardsEl.textContent = cardsEl.textContent += cards[i] + " "
+    for (let i = 0; i < playerCards.length; i++) {
+        //cardsEl.textContent = cardsEl.textContent += cards[i] + " "
     }
-    sumEl.textContent = "Total this Hand: " + playerSum
+    //sumEl.textContent = "Total this Hand: " + playerSum
     if (playerSum <= 20) {
         message = "Do you want to draw a new card?"
         buttons =
