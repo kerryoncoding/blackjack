@@ -6,15 +6,51 @@ let player = {
 let cards = []
 let sum = 0
 let pot = 0
-let message = ""
-let messageEl = document.getElementById("message-el")
-//let playerCards = document.querrySelector(".playerCards-el")
+let buttons = ""
+let message = "Want to Play?"
+//let messageEl = document.getElementById("message-el")
+let dealerCardsEl = document.querySelector(".dealerCards-el")
+let playerCardsEl = document.querySelector(".playerCards-el")
+let infoMessageEl = document.querySelector(".infoMessage-el")
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 let playerEl = document.getElementById("player-el")
 let showButtons = document.querySelector(".ActiveButtons")
 
 playerEl.textContent = player.name + ": $" + player.chips
+
+/// new below
+
+function renderDealerCards() {
+    dealerCardsEl.innerHTML =
+    `<div class="playerBox">
+          <p id="dealer-el">Dealer's cards here</p>
+    </div>`
+}
+
+function renderPlayerCards() {
+    playerCardsEl.innerHTML = 
+    `<div class="playerBox">
+          <p id="player-el"> players cards here</p>
+          <p id="sum-el">player sum here</p>
+    </div>`
+}
+
+function renderInfoMessage() {
+    infoMessageEl.innerHTML = 
+    `<p>${message}</p>`
+}
+
+function renderButtons() {
+    showButtons.innerHTML = `${buttons}`
+}
+
+renderDealerCards()
+renderPlayerCards()
+renderInfoMessage()
+
+
+//// new above
 
 function getRandomCard() {
     let randomNumber = Math.floor( Math.random()*13 ) + 1
@@ -60,18 +96,21 @@ function renderGame() {
           <button onclick="renderBets()">PLAY AGAIN</button>
         </div>`
     }
-    messageEl.innerHTML = message   
+   // messageEl.innerHTML = message 
+   renderInfoMessage()  
 }
 
 function renderBets() {
     message = "Place your bet"
-    messageEl.innerHTML = message
-    showButtons.innerHTML =
+   // messageEl.innerHTML = message
+    buttons =
         `<div class="bets">
           <button onclick="betFive()">$5</button>
           <button onclick="betTen()">$10</button>
           <button onclick="betFifteen()">$15</button>
         </div>`
+    renderInfoMessage()
+    renderButtons()
 }
 
 function betFive() {
@@ -110,7 +149,8 @@ function stay() {
             <button onclick="playAgain()">PLAY AGAIN</button>
             </div>`
     }
-    messageEl.innerHTML = message  
+    //messageEl.innerHTML = message
+    renderInfoMessage()  
 }
 
 function playAgain() {
