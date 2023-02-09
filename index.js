@@ -4,14 +4,16 @@ let player = {
 }
 
 let cards = []
-let sum = 0
+let playerSum = 0
+let currentBet = 0
 let pot = 0
 let buttons = ""
 let message = "Want to Play?"
-//let messageEl = document.getElementById("message-el")
 let dealerCardsEl = document.querySelector(".dealerCards-el")
 let playerCardsEl = document.querySelector(".playerCards-el")
 let infoMessageEl = document.querySelector(".infoMessage-el")
+let statInfoEl = document.querySelector(".statInfo-el")
+
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 let playerEl = document.getElementById("player-el")
@@ -45,8 +47,11 @@ function renderButtons() {
     showButtons.innerHTML = `${buttons}`
 }
 
-renderDealerCards()
-renderPlayerCards()
+function renderStatInfo() {
+    statInfoEl.innerHTML = 
+    `<p>Player Chips: ${player.chips}</p><p>Current Bet: $ ${currentBet}</p>`
+}
+
 renderInfoMessage()
 
 
@@ -67,42 +72,47 @@ function startGame() {
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
     cards = [firstCard, secondCard]
-    sum = firstCard + secondCard
+    playerSum = firstCard + secondCard
     renderBets()
+    renderStatInfo()
 }
 
 function renderGame() {
-    playerEl.textContent = player.name + ": $" + player.chips
-    cardsEl.textContent = "Player's Cards: "
+    renderDealerCards()
+    renderPlayerCards()
+   // playerEl.textContent = player.name + ": $" + player.chips
+  //  cardsEl.textContent = "Player's Cards: "
     for (let i = 0; i < cards.length; i++) {
         cardsEl.textContent = cardsEl.textContent += cards[i] + " "
     }
-    sumEl.textContent = "Total this Hand: " + sum
-    if (sum <= 20) {
-        console.log(sum);
+    sumEl.textContent = "Total this Hand: " + playerSum
+    if (playerSum <= 20) {
         message = "Do you want to draw a new card?"
-        renderPlayerMove();
-    } else if (sum === 21) {
+        buttons =
+        `<div class="playerMove">
+            <button onclick="stay()">STAY</button>
+            <button onclick="newCard()">NEW CARD</button>
+        </div>`
+    } else if (playerSum === 21) {
         message = "You've got Blackjack!"
         player.chips += pot;
-        showButtons.innerHTML =
+        buttons =
         `<div class="bets">
           <button onclick="playAgain()">PLAY AGAIN</button>
-        </div>`
+        </div>`        
     } else {
         message = "House Wins!"
-        showButtons.innerHTML =
+        buttons =
         `<div class="bets">
           <button onclick="renderBets()">PLAY AGAIN</button>
         </div>`
     }
-   // messageEl.innerHTML = message 
+   renderButtons()
    renderInfoMessage()  
 }
 
 function renderBets() {
     message = "Place your bet"
-   // messageEl.innerHTML = message
     buttons =
         `<div class="bets">
           <button onclick="betFive()">$5</button>
@@ -114,25 +124,18 @@ function renderBets() {
 }
 
 function betFive() {
+    currentBet = 5;
     player.chips -= 5;
     pot = 10;
+    renderStatInfo();
     renderGame();
-}
-
-
-function renderPlayerMove() {
-    showButtons.innerHTML =
-       `<div class="playerMove">
-          <button onclick="stay()">STAY</button>
-          <button onclick="newCard()">NEW CARD</button>
-        </div>`
 }
 
 function stay() {
     //compare your hand with dealer's hand
     alert("show all cards")
     //if house wins
-    if (sum > 1) {
+    if (playerSum > 1) {
         message = "You win!"
         player.chips += pot;
         playerEl.textContent = player.name + ": $" + player.chips
@@ -141,7 +144,7 @@ function stay() {
             <button onclick="playAgain()">PLAY AGAIN</button>
             </div>` 
     } else {
-         message = "The house wins"
+        message = "The house wins"
         player.chips -= pot;
         playerEl.textContent = player.name + ": $" + player.chips
         showButtons.innerHTML =
@@ -158,13 +161,13 @@ function playAgain() {
     cardsEl.textContent = ""
     sumEl.textContent = ""
     cards = []
-    sum = 0;
+    playerSum = 0;
 }
 
 
 function newCard() {
         let hitCard = getRandomCard();
-        sum += hitCard;
+        playerSum += hitCard;
         cards.push(hitCard);
         renderGame();       
 }
