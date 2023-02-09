@@ -11,6 +11,7 @@ let playerCards = []
 let dealerCards = []
 let playerSum = 0
 let currentBet = 0
+let value = 0
 let pot = 0
 let buttons = ""
 let message = "Want to Play?"
@@ -143,17 +144,29 @@ function renderBets() {
 }
 
 function betFive() {
-    currentBet = 5;
-    player.chips -= 5;
-    pot = 10;
+    value = 5
+    logBet()
+}
+
+function betTen() {
+    value = 10
+    logBet()
+}
+
+function betFifteen() {
+    value = 15
+    logBet()
+}
+
+function logBet() {
+    currentBet = value;
+    player.chips -= value;
+    pot = value*2;
     renderStatInfo();
     renderGame();
 }
 
 function stay() {
-    //compare your hand with dealer's hand
-    alert("show all cards")
-    //if house wins
     if (playerSum > dealerSum) {
         message = "You win!"
         player.chips += pot;
@@ -162,8 +175,15 @@ function stay() {
             `<div class="bets">
             <button onclick="playAgain()">PLAY AGAIN</button>
             </div>` 
-    } else {
-        message = "The house wins"
+    } else if(playerSum === dealerSum) {
+        message = "It's a Tie!"
+        renderAllDealerCards()
+        showButtons.innerHTML =
+            `<div class="bets">
+            <button onclick="playAgain()">PLAY AGAIN</button>
+            </div>` 
+    }else {
+        message = "House wins!"
         player.chips -= pot;
         renderAllDealerCards()
         showButtons.innerHTML =
@@ -171,7 +191,6 @@ function stay() {
             <button onclick="playAgain()">PLAY AGAIN</button>
             </div>`
     }
-    //messageEl.innerHTML = message
     renderInfoMessage()  
 }
 
