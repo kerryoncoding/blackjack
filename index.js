@@ -3,7 +3,10 @@ let player = {
     chips: 200
 }
 
-
+let firstCard = 0
+let secondCard = 0
+let dealerFirstCard = 0
+let dealerSecondCard = 0
 let playerCards = []
 let dealerCards = []
 let playerSum = 0
@@ -16,12 +19,10 @@ let playerCardsEl = document.querySelector(".playerCards-el")
 let infoMessageEl = document.querySelector(".infoMessage-el")
 let statInfoEl = document.querySelector(".statInfo-el")
 
-let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
-let playerEl = document.getElementById("player-el")
 let showButtons = document.querySelector(".ActiveButtons")
 
-playerEl.textContent = player.name + ": $" + player.chips
+// playerEl.textContent = player.name + ": $" + player.chips
 
 /// new below
 
@@ -39,8 +40,8 @@ function renderPlayerCards() {
     }
     playerCardsEl.innerHTML = 
     `<div class="playerBox">
-          <p id="player-el">Your's Hand: ${hand}</p>
-          <p id="sum-el">Sum of Hand: ${playerSum}</p>
+          <p>Your's Hand: ${hand}</p>
+          <p>Sum of Hand: ${playerSum}</p>
     </div>`
 }
 
@@ -63,6 +64,20 @@ renderInfoMessage()
 
 //// new above
 
+
+function startGame() {
+    firstCard = getRandomCard()
+    secondCard = getRandomCard()
+    playerCards = [firstCard, secondCard]
+    playerSum = firstCard + secondCard
+    dealerFirstCard = getRandomCard()
+    dealerSecondCard = getRandomCard()
+    dealerCards = [dealerFirstCard, dealerSecondCard]
+    dealerSum = dealerFirstCard + dealerSecondCard
+    renderBets()
+    renderStatInfo()
+}
+
 function getRandomCard() {
     let randomNumber = Math.floor( Math.random()*13 ) + 1
     if (randomNumber > 10) {
@@ -74,28 +89,9 @@ function getRandomCard() {
     }
 }
 
-function startGame() {
-    let firstCard = getRandomCard()
-    let secondCard = getRandomCard()
-    playerCards = [firstCard, secondCard]
-    playerSum = firstCard + secondCard
-    let dealerFirstCard = getRandomCard()
-    let dealerSecondCard = getRandomCard()
-    dealerCards = [dealerFirstCard, dealerSecondCard]
-    dealerSum = dealerFirstCard + dealerSecondCard
-    renderBets()
-    renderStatInfo()
-}
-
 function renderGame() {
     renderDealerCards()
     renderPlayerCards()
-   // playerEl.textContent = player.name + ": $" + player.chips
-  //  cardsEl.textContent = "Player's Cards: "
-    for (let i = 0; i < playerCards.length; i++) {
-        //cardsEl.textContent = cardsEl.textContent += cards[i] + " "
-    }
-    //sumEl.textContent = "Total this Hand: " + playerSum
     if (playerSum <= 20) {
         message = "Do you want to draw a new card?"
         buttons =
@@ -114,7 +110,7 @@ function renderGame() {
         message = "House Wins!"
         buttons =
         `<div class="bets">
-          <button onclick="renderBets()">PLAY AGAIN</button>
+          <button onclick="playAgain()">PLAY AGAIN</button>
         </div>`
     }
    renderButtons()
@@ -167,17 +163,16 @@ function stay() {
 }
 
 function playAgain() {
-    //restart game
-    cardsEl.textContent = ""
-    sumEl.textContent = ""
-    cards = []
-    playerSum = 0;
+    currentBet = 0
+    playerCards = []
+    dealerCards = []
+    startGame()
 }
 
 
 function newCard() {
         let hitCard = getRandomCard();
         playerSum += hitCard;
-        cards.push(hitCard);
+        playerCards.push(hitCard);
         renderGame();       
 }
