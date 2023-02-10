@@ -1,6 +1,6 @@
 let player = {
     name: "Player Name TBD",
-    chips: 200
+    chips: 50
 }
 
 let firstCard = 0
@@ -113,10 +113,7 @@ function renderGame() {
     if  ((firstCard + secondCard === 21)) {
         message = "You've got Blackjack!"
         player.chips += pot;
-        buttons =
-        `<div class="bets">
-          <button onclick="playAgain()">PLAY AGAIN</button>
-        </div>`
+        playAgainButton() 
     } else if (playerSum <= 21) {
         message = "Do you want to draw a new card?"
         buttons =
@@ -205,12 +202,17 @@ function dealerPlay() {
 }
 
 function playAgain() {
-    pot = 0
-    currentBet = 0
-    playerCards = []
-    dealerCards = []
-    clearTable()
-    startGame()
+    if(player.chips > 0) {
+        pot = 0
+        currentBet = 0
+        playerCards = []
+        dealerCards = []
+        clearTable()
+        startGame()
+    } else {
+        message = "You are out of Chips!"
+        renderInfoMessage();
+    }
 }
 
 
