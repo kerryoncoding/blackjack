@@ -131,12 +131,26 @@ function renderGame() {
 
 function renderBets() {
     message = "Place your bet"
-    buttons =
+    if (player.chips >= 15) {
+        buttons =
         `<div class="bets">
           <button onclick="betFive()">$5</button>
           <button onclick="betTen()">$10</button>
           <button onclick="betFifteen()">$15</button>
         </div>`
+    } else if (player.chips >= 10) {
+        buttons =
+        `<div class="bets">
+          <button onclick="betFive()">$5</button>
+          <button onclick="betTen()">$10</button>
+        </div>`
+    } else {
+        buttons =
+        `<div class="bets">
+          <button onclick="betFive()">$5</button>
+        </div>`
+    }
+    
     renderInfoMessage()
     renderButtons()
 }
