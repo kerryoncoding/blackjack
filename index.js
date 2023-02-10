@@ -7,6 +7,7 @@ let firstCard = 0
 let secondCard = 0
 let dealerFirstCard = 0
 let dealerSecondCard = 0
+let hitDealer = 0
 let playerCards = []
 let dealerCards = []
 let playerSum = 0
@@ -34,9 +35,13 @@ function renderDealerCards() {
 }
 
 function renderAllDealerCards() {
+    let dealerHand = ""
+    for (let i = 0; i < dealerCards.length; i++) {
+        dealerHand += dealerCards[i] + " "
+    }
     dealerCardsEl.innerHTML =
     `<div class="playerBox">
-          <p>Dealer's Hand: ${dealerCards[0]} ${dealerCards[1]}</p>
+          <p>Dealer's Hand: ${dealerHand}</p>
           <p>Sum of Hand: ${dealerSum}</p>
     </div>`
 }
@@ -60,7 +65,7 @@ function clearTable() {
 
 function renderInfoMessage() {
     infoMessageEl.innerHTML = 
-    `<p>${message}</p>`
+    `<h3>${message}</h3>`
 }
 
 function renderButtons() {
@@ -105,26 +110,23 @@ function getRandomCard() {
 function renderGame() {
     renderDealerCards()
     renderPlayerCards()
-    if (playerSum <= 20) {
-        message = "Do you want to draw a new card?"
-        buttons =
-        `<div class="playerMove">
-            <button onclick="stay()">STAY</button>
-            <button onclick="newCard()">NEW CARD</button>
-        </div>`
-    } else if (playerSum === 21) {
+    if  ((firstCard + secondCard === 21)) {
         message = "You've got Blackjack!"
         player.chips += pot;
         buttons =
         `<div class="bets">
           <button onclick="playAgain()">PLAY AGAIN</button>
-        </div>`        
+        </div>`
+    } else if (playerSum <= 21) {
+        message = "Do you want to draw a new card?"
+        buttons =
+        `<div class="playerMove">
+            <button onclick="stay()">STAY</button>
+            <button onclick="newCard()">NEW CARD</button>
+        </div>`      
     } else {
         message = "House Wins!"
-        buttons =
-        `<div class="bets">
-          <button onclick="playAgain()">PLAY AGAIN</button>
-        </div>`
+        playAgainButton()
     }
    renderButtons()
    renderInfoMessage()  
@@ -166,31 +168,40 @@ function logBet() {
 }
 
 function stay() {
-    if (playerSum > dealerSum) {
+    dealerPlay()
+    if (playerSum > dealerSum || dealerSum > 21) {
         message = "You win!"
         player.chips += pot;
         renderAllDealerCards()
-        showButtons.innerHTML =
-            `<div class="bets">
-            <button onclick="playAgain()">PLAY AGAIN</button>
-            </div>` 
+        playAgainButton() 
     } else if(playerSum === dealerSum) {
         message = "It's a Tie!"
         player.chips += currentBet;
         renderAllDealerCards()
-        showButtons.innerHTML =
-            `<div class="bets">
-            <button onclick="playAgain()">PLAY AGAIN</button>
-            </div>` 
+        playAgainButton() 
     }else {
         message = "House wins!"
-        renderAllDealerCards()
-        showButtons.innerHTML =
+        renderAllDealerCards();
+        playAgainButton();
+    }
+    renderInfoMessage()
+    renderButtons()  
+}
+
+function playAgainButton() {
+    buttons =
             `<div class="bets">
             <button onclick="playAgain()">PLAY AGAIN</button>
             </div>`
-    }
-    renderInfoMessage()  
+}
+
+function dealerPlay() {
+    if (dealerSum < 17) {
+        hitDealer = getRandomCard();
+        dealerSum += hitDealer;
+        dealerCards.push(hitDealer);
+        dealerPlay();
+    }     
 }
 
 function playAgain() {
