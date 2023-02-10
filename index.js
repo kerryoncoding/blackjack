@@ -1,6 +1,6 @@
 let player = {
     name: "Player Name TBD",
-    chips: 50
+    chips: 100
 }
 
 let firstCard = 0
