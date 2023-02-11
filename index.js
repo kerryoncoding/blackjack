@@ -202,7 +202,6 @@ function playerAceCheck() {
 function swapAce() {
     for (let i = 0; i < playerCards.length; i++) {
         if (playerCards[i]=== 11) {
-            alert("ace found");
             playerCards[i] = 1;
             playerSum -= 10;
             renderPlayerCards();
@@ -246,7 +245,6 @@ function dealerPlay() {
 function dealerAceCheck() {
     for (let i = 0; i < dealerCards.length; i++) {
         if (dealerCards[i]=== 11) {
-            alert("dealerhasace")
             dealerCards[i] = 1;
             dealerSum -= 10;
             dealerPlay();
