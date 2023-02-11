@@ -7,6 +7,7 @@ let firstCard = 0
 let secondCard = 0
 let dealerFirstCard = 0
 let dealerSecondCard = 0
+let playerHasAce = false;
 let hitDealer = 0
 let playerCards = []
 let dealerCards = []
@@ -174,19 +175,42 @@ function newCard() {
 }
 
 function checkBust() {
-    if (playerSum > 21) {
-        // checkforAce
-        alert("checking for ace")
+    if (playerSum < 22) {
+        renderGame();
     } else {
-        message = "House wins!"
-        renderPlayerCards();
-        renderInfoMessage();
-        renderButtons(); 
+        playerAceCheck()
+        if (playerSum > 22 && playerHasAce === true) {
+            swapAce();
+            playerHasAce = false;
+        } else {
+            message = "House Wins!"
+            renderPlayerCards();
+            renderInfoMessage();
+            playAgainButton()
+            renderButtons(); 
+        }        
     }
 }
 
+function playerAceCheck() {
+    for (let i = 0; i < playerCards.length; i++) {
+        if (playerCards[i]=== 11) {
+            playerHasAce = true;
+        } 
+    }
+}
 
-
+function swapAce() {
+    for (let i = 0; i < playerCards.length; i++) {
+        if (playerCards[i]=== 11) {
+            alert("ace found");
+            playerCards[i] = 1;
+            playerSum -= 10;
+            renderPlayerCards();
+            checkBust();
+    }
+}
+}
 
 
 
@@ -220,26 +244,6 @@ function getRandomCard() {
     }
 }
 
-
-
-
-
-function playerAceCheck() {
-    for (let i = 0; i < playerCards.length; i++) {
-        if (playerCards[i]=== 11) {
-            alert("ace");
-            playerCards[i] = 1;
-            playerSum -= 10;
-            renderPlayerCards();
-            break;
-        } else {
-            message = "House Wins!"
-            playAgainButton();
-            renderButtons();
-            renderInfoMessage();
-        }
-    }
-}
 
 
 
@@ -287,6 +291,7 @@ function playAgain() {
         currentBet = 0
         playerCards = []
         dealerCards = []
+        playerHasAce = false
         clearTable()
         startGame()
     } else {
