@@ -20,12 +20,8 @@ let dealerCardsEl = document.querySelector(".dealerCards-el")
 let playerCardsEl = document.querySelector(".playerCards-el")
 let infoMessageEl = document.querySelector(".infoMessage-el")
 let statInfoEl = document.querySelector(".statInfo-el")
-
 let showButtons = document.querySelector(".ActiveButtons")
 
-// playerEl.textContent = player.name + ": $" + player.chips
-
-/// new below
 
 function renderDealerCards() {
     dealerCardsEl.innerHTML =
@@ -79,9 +75,7 @@ function renderStatInfo() {
 
 renderInfoMessage()
 
-
-//// new above
-
+///////////////
 
 function startGame() {
     firstCard = getRandomCard()
@@ -94,39 +88,6 @@ function startGame() {
     dealerSum = dealerFirstCard + dealerSecondCard
     renderBets()
     renderStatInfo()
-}
-
-function getRandomCard() {
-    let randomNumber = Math.floor( Math.random()*13 ) + 1
-    if (randomNumber > 10) {
-        return 10
-    } else if (randomNumber === 1) {
-        return 11
-    } else {
-        return randomNumber
-    }
-}
-
-function renderGame() {
-    renderDealerCards()
-    renderPlayerCards()
-    if  ((firstCard + secondCard === 21)) {
-        message = "You've got Blackjack!"
-        player.chips += pot;
-        playAgainButton() 
-    } else if (playerSum <= 21) {
-        message = "Do you want to draw a new card?"
-        buttons =
-        `<div class="playerMove">
-            <button onclick="stay()">STAY</button>
-            <button onclick="newCard()">NEW CARD</button>
-        </div>`      
-    } else {
-        message = "House Wins!"
-        playAgainButton()
-    }
-   renderButtons()
-   renderInfoMessage()  
 }
 
 function renderBets() {
@@ -150,7 +111,6 @@ function renderBets() {
           <button onclick="betFive()">$5</button>
         </div>`
     }
-    
     renderInfoMessage()
     renderButtons()
 }
@@ -175,8 +135,114 @@ function logBet() {
     player.chips -= value;
     pot = value*2;
     renderStatInfo();
-    renderGame();
+    ///  renderGame();
+    checkforBlackjack()
 }
+
+function checkforBlackjack() {
+    renderDealerCards();
+    renderPlayerCards();
+    if  ((firstCard + secondCard === 21)) {
+        message = "You've got Blackjack!"
+        player.chips += pot;
+        playAgainButton();
+        renderInfoMessage(); 
+    } else {
+        renderGame();
+    }
+}
+
+function renderGame() {
+    renderDealerCards()
+    renderPlayerCards()
+    message = "Do you want to draw a new card?"
+    buttons =
+    `<div class="playerMove">
+        <button onclick="stay()">STAY</button>
+        <button onclick="newCard()">NEW CARD</button>
+    </div>`      
+   renderButtons()
+   renderInfoMessage()  
+}
+
+function newCard() {
+        let hitCard = getRandomCard();
+        playerSum += hitCard;
+        playerCards.push(hitCard);
+        renderPlayerCards()
+        checkBust();    
+}
+
+function checkBust() {
+    if (playerSum > 21) {
+        // checkforAce
+        alert("checking for ace")
+    } else {
+        message = "House wins!"
+        renderPlayerCards();
+        renderInfoMessage();
+        renderButtons(); 
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function playAgainButton() {
+    buttons =
+            `<div class="bets">
+            <button onclick="playAgain()">PLAY AGAIN</button>
+            </div>`
+}
+
+
+
+
+function getRandomCard() {
+    let randomNumber = Math.floor( Math.random()*13 ) + 1
+    if (randomNumber > 10) {
+        return 10
+    } else if (randomNumber === 1) {
+        return 11
+    } else {
+        return randomNumber
+    }
+}
+
+
+
+
+
+function playerAceCheck() {
+    for (let i = 0; i < playerCards.length; i++) {
+        if (playerCards[i]=== 11) {
+            alert("ace");
+            playerCards[i] = 1;
+            playerSum -= 10;
+            renderPlayerCards();
+            break;
+        } else {
+            message = "House Wins!"
+            playAgainButton();
+            renderButtons();
+            renderInfoMessage();
+        }
+    }
+}
+
+
+
 
 function stay() {
     dealerPlay()
@@ -199,12 +265,12 @@ function stay() {
     renderButtons()  
 }
 
-function playAgainButton() {
-    buttons =
-            `<div class="bets">
-            <button onclick="playAgain()">PLAY AGAIN</button>
-            </div>`
-}
+
+
+
+
+
+
 
 function dealerPlay() {
     if (dealerSum < 17) {
@@ -230,9 +296,3 @@ function playAgain() {
 }
 
 
-function newCard() {
-        let hitCard = getRandomCard();
-        playerSum += hitCard;
-        playerCards.push(hitCard);
-        renderGame();       
-}
