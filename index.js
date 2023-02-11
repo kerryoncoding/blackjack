@@ -4,26 +4,26 @@ let player = {
 }
 
 let playerHasAce = false;
-let firstCard = 0
-let secondCard = 0
-let dealerFirstCard = 0
-let dealerSecondCard = 0
-let hitDealer = 0
-let playerSum = 0
-let currentBet = 0
-let value = 0
-let pot = 0
+let firstCard = 0;
+let secondCard = 0;
+let dealerFirstCard = 0;
+let dealerSecondCard = 0;
+let hitDealer = 0;
+let playerSum = 0;
+let currentBet = 0;
+let value = 0;
+let pot = 0;
 
-let playerCards = []
-let dealerCards = []
+let playerCards = [];
+let dealerCards = [];
 
-let buttons = ""
-let message = "Want to Play?"
-let dealerCardsEl = document.querySelector(".dealerCards-el")
-let playerCardsEl = document.querySelector(".playerCards-el")
-let infoMessageEl = document.querySelector(".infoMessage-el")
-let statInfoEl = document.querySelector(".statInfo-el")
-let showButtons = document.querySelector(".ActiveButtons")
+let buttons = "";
+let message = "Want to Play?";
+let dealerCardsEl = document.querySelector(".dealerCards-el");
+let playerCardsEl = document.querySelector(".playerCards-el");
+let infoMessageEl = document.querySelector(".infoMessage-el");
+let statInfoEl = document.querySelector(".statInfo-el");
+let showButtons = document.querySelector(".ActiveButtons");
 
 
 function renderDealerCards() {
@@ -36,7 +36,7 @@ function renderDealerCards() {
 function renderAllDealerCards() {
     let dealerHand = ""
     for (let i = 0; i < dealerCards.length; i++) {
-        dealerHand += dealerCards[i] + " "
+        dealerHand += dealerCards[i] + " ";
     }
     dealerCardsEl.innerHTML =
     `<div class="playerBox">
@@ -48,7 +48,7 @@ function renderAllDealerCards() {
 function renderPlayerCards() {
     let hand = ""
     for (let i = 0; i < playerCards.length; i++) {
-        hand += playerCards[i] + " "
+        hand += playerCards[i] + " ";
     }
     playerCardsEl.innerHTML = 
     `<div class="playerBox">
@@ -58,8 +58,8 @@ function renderPlayerCards() {
 }
 
 function clearTable() {
-    dealerCardsEl.innerHTML = `<div></div>`
-    playerCardsEl.innerHTML = `<div></div>`
+    dealerCardsEl.innerHTML = `<div></div>`;
+    playerCardsEl.innerHTML = `<div></div>`;
 }
 
 function renderInfoMessage() {
@@ -79,16 +79,16 @@ function renderStatInfo() {
 renderInfoMessage()
 
 function startGame() {
-    firstCard = getRandomCard()
-    secondCard = getRandomCard()
-    playerCards = [firstCard, secondCard]
-    playerSum = firstCard + secondCard
-    dealerFirstCard = getRandomCard()
-    dealerSecondCard = getRandomCard()
-    dealerCards = [dealerFirstCard, dealerSecondCard]
-    dealerSum = dealerFirstCard + dealerSecondCard
-    renderBets()
-    renderStatInfo()
+    firstCard = getRandomCard();
+    secondCard = getRandomCard();
+    playerCards = [firstCard, secondCard];
+    playerSum = firstCard + secondCard;
+    dealerFirstCard = getRandomCard();
+    dealerSecondCard = getRandomCard();
+    dealerCards = [dealerFirstCard, dealerSecondCard];
+    dealerSum = dealerFirstCard + dealerSecondCard;
+    renderBets();
+    renderStatInfo();
 }
 
 function renderBets() {
@@ -112,23 +112,23 @@ function renderBets() {
           <button onclick="betFive()">$5</button>
         </div>`
     }
-    renderInfoMessage()
-    renderButtons()
+    renderInfoMessage();
+    renderButtons();
 }
 
 function betFive() {
-    value = 5
-    logBet()
+    value = 5;
+    logBet();
 }
 
 function betTen() {
-    value = 10
-    logBet()
+    value = 10;
+    logBet();
 }
 
 function betFifteen() {
-    value = 15
-    logBet()
+    value = 15;
+    logBet();
 }
 
 function logBet() {
@@ -153,31 +153,32 @@ function checkforBlackjack() {
 }
 
 function renderGame() {
-    renderDealerCards()
-    renderPlayerCards()
-    message = "Do you want to draw a new card?"
+    renderDealerCards();
+    renderPlayerCards();
+    message = "Do you want to draw a new card?";
     buttons =
     `<div class="playerMove">
         <button onclick="stay()">STAY</button>
         <button onclick="newCard()">NEW CARD</button>
     </div>`      
-   renderButtons()
-   renderInfoMessage()  
+   renderButtons();
+   renderInfoMessage();
 }
 
 function newCard() {
         let hitCard = getRandomCard();
         playerSum += hitCard;
         playerCards.push(hitCard);
-        renderPlayerCards()
+        renderPlayerCards();
         checkBust();    
 }
 
 function checkBust() {
+    console.log("checkBust")
     if (playerSum < 22) {
         renderGame();
     } else {
-        playerAceCheck()
+        playerAceCheck();
         if (playerSum > 22 && playerHasAce === true) {
             swapAce();
             playerHasAce = false;
@@ -213,22 +214,22 @@ function swapAce() {
 function stay() {
     dealerPlay()
     if (playerSum > dealerSum) {
-        message = "You win!"
+        message = "You win!";
         player.chips += pot;
-        renderAllDealerCards()
-        playAgainButton() 
+        renderAllDealerCards();
+        playAgainButton(); 
     } else if(playerSum === dealerSum) {
-        message = "It's a Tie!"
+        message = "It's a Tie!";
         player.chips += currentBet;
-        renderAllDealerCards()
-        playAgainButton() 
+        renderAllDealerCards();
+        playAgainButton() ;
     }else {
-        message = "House wins!"
+        message = "House wins!";
         renderAllDealerCards();
         playAgainButton();
     }
-    renderInfoMessage()
-    renderButtons()  
+    renderInfoMessage();
+    renderButtons();
 }
 
 function dealerPlay() {
@@ -264,24 +265,24 @@ function playAgainButton() {
 function getRandomCard() {
     let randomNumber = Math.floor( Math.random()*13 ) + 1
     if (randomNumber > 10) {
-        return 10
+        return 10;
     } else if (randomNumber === 1) {
-        return 11
+        return 11;
     } else {
-        return randomNumber
+        return randomNumber;
     }
 }
 
 
 function playAgain() {
     if(player.chips > 0) {
-        pot = 0
-        currentBet = 0
-        playerCards = []
-        dealerCards = []
-        playerHasAce = false
-        clearTable()
-        startGame()
+        pot = 0;
+        currentBet = 0;
+        playerCards = [];
+        dealerCards = [];
+        playerHasAce = false;
+        clearTable();
+        startGame();
     } else {
         message = "You are out of Chips!"
         renderInfoMessage();
