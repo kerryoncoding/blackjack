@@ -3,18 +3,20 @@ let player = {
     chips: 100
 }
 
+let playerHasAce = false;
 let firstCard = 0
 let secondCard = 0
 let dealerFirstCard = 0
 let dealerSecondCard = 0
-let playerHasAce = false;
 let hitDealer = 0
-let playerCards = []
-let dealerCards = []
 let playerSum = 0
 let currentBet = 0
 let value = 0
 let pot = 0
+
+let playerCards = []
+let dealerCards = []
+
 let buttons = ""
 let message = "Want to Play?"
 let dealerCardsEl = document.querySelector(".dealerCards-el")
@@ -75,8 +77,6 @@ function renderStatInfo() {
 }
 
 renderInfoMessage()
-
-///////////////
 
 function startGame() {
     firstCard = getRandomCard()
@@ -211,8 +211,6 @@ function swapAce() {
 }
 }
 
-////
-
 function stay() {
     dealerPlay()
     if (playerSum > dealerSum) {
@@ -245,7 +243,6 @@ function dealerPlay() {
     }
 }
 
-
 function dealerAceCheck() {
     for (let i = 0; i < dealerCards.length; i++) {
         if (dealerCards[i]=== 11) {
@@ -256,21 +253,6 @@ function dealerAceCheck() {
         } 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function playAgainButton() {
@@ -291,15 +273,6 @@ function getRandomCard() {
         return randomNumber
     }
 }
-
-
-
-
-
-
-
-
-
 
 
 function playAgain() {
