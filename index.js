@@ -29,7 +29,7 @@ let showButtons = document.querySelector(".ActiveButtons");
 function renderDealerCards() {
     dealerCardsEl.innerHTML =
     `<div class="playerBox">
-          <p>Dealer's Hand: X ${dealerCards[1]}</p>
+          <p>Dealer's Hand: ⬜ ${dealerCards[1]}</p>
     </div>`
 }
 
