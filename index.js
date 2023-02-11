@@ -219,7 +219,7 @@ function stay() {
         renderAllDealerCards();
         playAgainButton(); 
     } else if(playerSum === dealerSum) {
-        message = "It's a Tie!";
+        message = "Push. It's a Tie!";
         player.chips += currentBet;
         renderAllDealerCards();
         playAgainButton() ;
