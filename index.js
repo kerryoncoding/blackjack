@@ -143,7 +143,7 @@ function checkforBlackjack() {
     renderDealerCards();
     renderPlayerCards();
     if  ((firstCard + secondCard === 21)) {
-        message = "You've got Blackjack!"
+        message = "Blackjack! You win!"
         player.chips += pot;
         playAgainButton();
         renderButtons();
@@ -156,7 +156,7 @@ function checkforBlackjack() {
 function renderGame() {
     renderDealerCards();
     renderPlayerCards();
-    message = "Do you want to draw a new card?";
+    message = "Do you want a new card?";
     buttons =
     `<div class="playerMove">
         <button onclick="stay()">STAY</button>
@@ -183,7 +183,7 @@ function checkBust() {
             swapAce();
             playerHasAce = false;
         } else {
-            message = "House Wins!"
+            message = "Bust. House Wins!"
             renderPlayerCards();
             renderInfoMessage();
             playAgainButton()
