@@ -136,7 +136,6 @@ function logBet() {
     player.chips -= value;
     pot = value*2;
     renderStatInfo();
-    ///  renderGame();
     checkforBlackjack()
 }
 
@@ -212,6 +211,57 @@ function swapAce() {
 }
 }
 
+////
+
+function stay() {
+    dealerPlay()
+    if (playerSum > dealerSum) {
+        message = "You win!"
+        player.chips += pot;
+        renderAllDealerCards()
+        playAgainButton() 
+    } else if(playerSum === dealerSum) {
+        message = "It's a Tie!"
+        player.chips += currentBet;
+        renderAllDealerCards()
+        playAgainButton() 
+    }else {
+        message = "House wins!"
+        renderAllDealerCards();
+        playAgainButton();
+    }
+    renderInfoMessage()
+    renderButtons()  
+}
+
+function dealerPlay() {
+    if (dealerSum < 17) {
+        hitDealer = getRandomCard();
+        dealerSum += hitDealer;
+        dealerCards.push(hitDealer);
+        dealerPlay();
+    } else if (dealerSum > 21){
+        dealerAceCheck();
+    }
+}
+
+
+function dealerAceCheck() {
+    for (let i = 0; i < dealerCards.length; i++) {
+        if (dealerCards[i]=== 11) {
+            alert("dealerhasace")
+            dealerCards[i] = 1;
+            dealerSum -= 10;
+            dealerPlay();
+        } 
+    }
+}
+
+
+
+
+
+
 
 
 
@@ -231,8 +281,6 @@ function playAgainButton() {
 }
 
 
-
-
 function getRandomCard() {
     let randomNumber = Math.floor( Math.random()*13 ) + 1
     if (randomNumber > 10) {
@@ -248,42 +296,11 @@ function getRandomCard() {
 
 
 
-function stay() {
-    dealerPlay()
-    if (playerSum > dealerSum || dealerSum > 21) {
-        message = "You win!"
-        player.chips += pot;
-        renderAllDealerCards()
-        playAgainButton() 
-    } else if(playerSum === dealerSum) {
-        message = "It's a Tie!"
-        player.chips += currentBet;
-        renderAllDealerCards()
-        playAgainButton() 
-    }else {
-        message = "House wins!"
-        renderAllDealerCards();
-        playAgainButton();
-    }
-    renderInfoMessage()
-    renderButtons()  
-}
 
 
 
 
 
-
-
-
-function dealerPlay() {
-    if (dealerSum < 17) {
-        hitDealer = getRandomCard();
-        dealerSum += hitDealer;
-        dealerCards.push(hitDealer);
-        dealerPlay();
-    }     
-}
 
 function playAgain() {
     if(player.chips > 0) {
