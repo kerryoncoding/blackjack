@@ -212,7 +212,6 @@ function swapAce() {
 
 function stay() {
     dealerPlay();
-    console.log("dealersum:" + dealerSum )
     if (playerSum > dealerSum || dealerSum > 21) {
         message = "You win!";
         player.chips += pot;
@@ -233,7 +232,6 @@ function stay() {
 }
 
 function dealerPlay() {
-    console.log(dealerSum);
     if (dealerSum < 17) {
         hitDealer = getRandomCard();
         dealerSum += hitDealer;
