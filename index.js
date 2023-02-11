@@ -146,6 +146,7 @@ function checkforBlackjack() {
         message = "You've got Blackjack!"
         player.chips += pot;
         playAgainButton();
+        renderButtons();
         renderInfoMessage(); 
     } else {
         renderGame();
