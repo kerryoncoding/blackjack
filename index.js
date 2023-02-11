@@ -136,7 +136,7 @@ function logBet() {
     player.chips -= value;
     pot = value*2;
     renderStatInfo();
-    checkforBlackjack()
+    checkforBlackjack();
 }
 
 function checkforBlackjack() {
@@ -174,7 +174,6 @@ function newCard() {
 }
 
 function checkBust() {
-    console.log("checkBust")
     if (playerSum < 22) {
         renderGame();
     } else {
@@ -212,8 +211,9 @@ function swapAce() {
 }
 
 function stay() {
-    dealerPlay()
-    if (playerSum > dealerSum) {
+    dealerPlay();
+    console.log("dealersum:" + dealerSum )
+    if (playerSum > dealerSum || dealerSum > 21) {
         message = "You win!";
         player.chips += pot;
         renderAllDealerCards();
@@ -233,6 +233,7 @@ function stay() {
 }
 
 function dealerPlay() {
+    console.log(dealerSum);
     if (dealerSum < 17) {
         hitDealer = getRandomCard();
         dealerSum += hitDealer;
