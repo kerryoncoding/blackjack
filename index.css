@@ -7,7 +7,7 @@ body {
 
 .table {
     display: block;
-    margin: 50 auto;
+    margin: 50px auto;
     border: solid 2px goldenrod;
     border-radius: 10px;
     background-image: url("images/table.png");
@@ -17,6 +17,7 @@ body {
     color: white;
     text-align: center;
 }
+
 
 h1 {
     color: goldenrod;
@@ -42,7 +43,7 @@ button {
 
 .playerBox {
     display: block;
-    margin: 50 auto;
+    margin: 50px auto;
     width: 250px;
     border: solid 1px white;
     border-radius: 4px;

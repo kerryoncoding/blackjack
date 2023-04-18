@@ -1,4 +1,4 @@
-let player = {
+const player = {
     name: "Player Name TBD",
     chips: 100
 }
