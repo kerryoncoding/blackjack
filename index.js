@@ -1,7 +1,4 @@
-const player = {
-    name: "Player Name TBD",
-    chips: 100
-}
+let chips= 100;
 
 let playerHasAce = false;
 let firstCard = 0;
@@ -23,7 +20,7 @@ let dealerCardsEl = document.querySelector(".dealerCards-el");
 let playerCardsEl = document.querySelector(".playerCards-el");
 let infoMessageEl = document.querySelector(".infoMessage-el");
 let statInfoEl = document.querySelector(".statInfo-el");
-let showButtons = document.querySelector(".ActiveButtons");
+let showButtons = document.querySelector(".activeButtons");
 
 
 function renderDealerCards() {
@@ -73,7 +70,7 @@ function renderButtons() {
 
 function renderStatInfo() {
     statInfoEl.innerHTML = 
-    `<p>Your Chips: $ ${player.chips}</p><p>Pot Value: $ ${pot}</p>`
+    `<p>Your Chips: $ ${chips}</p><p>Pot Value: $ ${pot}</p>`
 }
 
 renderInfoMessage()
@@ -93,14 +90,14 @@ function startGame() {
 
 function renderBets() {
     message = "Place your bet"
-    if (player.chips >= 15) {
+    if (chips >= 15) {
         buttons =
         `<div class="bets">
           <button onclick="betFive()">$5</button>
           <button onclick="betTen()">$10</button>
           <button onclick="betFifteen()">$15</button>
         </div>`
-    } else if (player.chips >= 10) {
+    } else if (chips >= 10) {
         buttons =
         `<div class="bets">
           <button onclick="betFive()">$5</button>
@@ -133,7 +130,7 @@ function betFifteen() {
 
 function logBet() {
     currentBet = value;
-    player.chips -= value;
+    chips -= value;
     pot = value*2;
     renderStatInfo();
     checkforBlackjack();
@@ -144,7 +141,7 @@ function checkforBlackjack() {
     renderPlayerCards();
     if  ((firstCard + secondCard === 21)) {
         message = "Blackjack! You win!"
-        player.chips += pot;
+        chips += pot;
         playAgainButton();
         renderButtons();
         renderInfoMessage(); 
@@ -215,12 +212,12 @@ function stay() {
     dealerPlay();
     if (playerSum > dealerSum || dealerSum > 21) {
         message = "You win!";
-        player.chips += pot;
+        chips += pot;
         renderAllDealerCards();
         playAgainButton(); 
     } else if(playerSum === dealerSum) {
         message = "Push. It's a Tie!";
-        player.chips += currentBet;
+        chips += currentBet;
         renderAllDealerCards();
         playAgainButton() ;
     }else {
@@ -275,7 +272,7 @@ function getRandomCard() {
 
 
 function playAgain() {
-    if(player.chips > 0) {
+    if(chips > 0) {
         pot = 0;
         currentBet = 0;
         playerCards = [];
